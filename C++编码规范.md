@@ -115,7 +115,7 @@ xml.save("test.xml");	// 常见操作，自动解码
 
 ###清晰明了，驼峰式命名
 
-命名应当清晰明了一眼就能看出所表示的含义，去除不必要的前缀，不要使用匈牙利命名方式，指针不用前缀p。匈牙利命名法则最先由微软推广，到目前为止，没有任何一家IT公司在推广采用（包括微软）。匈牙利命名法则写出的代码冗余太多且难以阅读。微软的C#、Google的C++命名规则、Qt等没有采用匈牙利命名法则。
+命名应当清晰明了一眼就能看出所表示的含义，去除不必要的前缀（类名前面的C、整型全面的i、槽函数前面的slot等），不要使用匈牙利命名方式，指针不用前缀p。匈牙利命名法则最先由微软推广，到目前为止，没有任何一家IT公司在推广采用（包括微软）。匈牙利命名法则写出的代码冗余太多且难以阅读。微软的C#、Google的C++命名规则、Qt等没有采用匈牙利命名法则。
 
 命名也是一门艺术，牛头不对马嘴的命名一定要避免。如下是一些糟糕的命名：
 
@@ -268,6 +268,22 @@ if(student.name()=="Jone"){
 ~~~c++
 string name;
 student.getName(&name);
+~~~
+
+#### Qt的信号函数不使用signal，槽函数不使用slot
+
+在信号函数中需要存在signal字段，说明信号函数命名不直观。
+
+槽函数和成员函数本来就没啥区别，因此不需要添加slot字段。
+
+~~~c++
+// bad
+connect(lineEdit,SIGNAL(signalTextChanged(string)),widget,SLOT(slotSetText(string)));
+widget->slotSetText("Untitled");
+
+// good
+connect(lineEdit,SIGNAL(textChanged(string)),widget,SLOT(setText(string)));
+widget->setText("Untitled");
 ~~~
 
 
